@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CreatorGraph — Your Tribes & Signal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./results.css" />
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark"></div>
+        <span class="brand-word">CreatorGraph</span>
+      </div>
+      <div class="topbar-actions">
+        <span class="micro-pill" id="pill-count"></span>
+        <span class="micro-pill">Graph Intelligence</span>
+        <p class="byline">Made by Shango Bashi</p>
+      </div>
+    </header>
+
+    <!-- Loading state -->
+    <div id="loading-state" class="loading-state">
+      <div class="loading-spinner"></div>
+      <div class="loading-phase" id="loading-phase">Building your graph…</div>
+      <div class="loading-detail" id="loading-detail">Analyzing connections across your network</div>
+      <div class="loading-bar"><div class="loading-bar-fill" id="loading-bar-fill"></div></div>
+    </div>
+
+    <!-- Empty state -->
+    <div id="empty-state" class="empty-state" style="display:none">
+      <div class="empty-icon">⊙</div>
+      <div class="empty-title">No network data found</div>
+      <div class="empty-desc">
+        Install the CreatorGraph extension, navigate to your X/Twitter <code>/following</code> page, and click <strong>Analyze My Network</strong> in the popup.
+      </div>
+    </div>
+
+    <!-- Main results -->
+    <main id="main-results" style="display:none" class="shell">
+
+      <!-- Section 1: Tribes -->
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-eyebrow">Your Communities</div>
+            <h2 class="section-title">Twitter Tribes</h2>
+          </div>
+          <button id="export-tribes-btn" class="action-pill">Export PNG</button>
+        </div>
+        <div id="tribes-grid" class="tribes-grid"></div>
+      </section>
+
+      <!-- Section 2: SIGNAL -->
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-eyebrow">Network Intelligence</div>
+            <h2 class="section-title">SIGNAL — Who Actually Matters</h2>
+          </div>
+        </div>
+        <p class="section-lede">
+          Ranked by graph position — not followers. These accounts bridge communities, sit at key junctions, and carry disproportionate influence in your network.
+        </p>
+        <div id="signal-list" class="signal-list"></div>
+      </section>
+
+      <!-- Section 3: Graph View -->
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-eyebrow">Network Visualization</div>
+            <h2 class="section-title">Graph View</h2>
+          </div>
+          <button id="export-graph-btn" class="action-pill">Export PNG</button>
+        </div>
+        <div class="graph-container">
+          <canvas id="graph-canvas"></canvas>
+          <div class="graph-legend" id="graph-legend"></div>
+          <div class="graph-controls">
+            <button class="ctrl-btn" id="zoom-in">+</button>
+            <button class="ctrl-btn" id="zoom-out">−</button>
+            <button class="ctrl-btn" id="zoom-reset">⌂</button>
+          </div>
+          <div class="graph-hint">Scroll to zoom · Drag to pan · Click node for profile</div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="footer-bar">
+      <span>CreatorGraph — Graph Intelligence for Creators</span>
+      <span class="footer-by">Made by Shango Bashi</span>
+    </footer>
+
+    <script src="./results.js"></script>
+  </body>
+</html>

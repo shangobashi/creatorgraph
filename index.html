@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>CreatorGraph — Your Twitter Tribes &amp; Signal</title>
+  <meta name="description" content="Uncover the hidden structure of your Twitter network. Detect communities, find who actually matters — all client-side graph intelligence."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="site.css"/>
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a class="nav-brand" href="/">
+      <div class="nav-mark"></div>
+      <span class="nav-word">CreatorGraph</span>
+    </a>
+    <div class="nav-actions">
+      <p class="nav-by">Made by Shango Bashi</p>
+      <a href="#install" class="btn-nav">Get Extension</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          Graph Intelligence for Twitter
+        </div>
+      </div>
+
+      <h1 class="hero-title">
+        Discover Your<br/>
+        <span class="grad">Twitter Tribes</span><br/>
+        &amp; Who Actually Matters
+      </h1>
+
+      <p class="hero-desc">
+        Most tools count followers. CreatorGraph reads your network.
+        See your communities, find the hidden connectors, and understand
+        who carries real influence by graph position — not vanity metrics.
+      </p>
+
+      <div class="hero-cta">
+        <a href="#install" class="btn-primary">Install Free — Chrome</a>
+        <a href="#how" class="btn-ghost">See How It Works</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">Louvain</div>
+          <div class="stat-label">Community Detection</div>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat">
+          <div class="stat-num">Betweenness</div>
+          <div class="stat-label">Centrality Engine</div>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Client-Side Only</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-graph" aria-hidden="true">
+      <canvas id="mini-graph"></canvas>
+    </div>
+  </section>
+
+  <!-- TRIBES -->
+  <section class="feature-section" id="features">
+    <div class="feature-inner">
+      <div class="feature-text">
+        <div class="tag">Feature 01</div>
+        <h2 class="feature-title">Twitter Tribes</h2>
+        <p class="feature-desc">
+          Your following list is not random. It is a set of overlapping communities —
+          AI Builders, Indie Hackers, Crypto Degens, VC Twitter — that form naturally
+          through shared interests and connections.
+        </p>
+        <p class="feature-desc">
+          CreatorGraph runs the <strong>Louvain algorithm</strong> on your network graph
+          to surface these clusters automatically. No tagging. No manual work.
+          Just the hidden structure of who you actually follow.
+        </p>
+        <div class="feature-bullets">
+          <div class="bullet"><div class="bullet-dot"></div><span>Automatic community detection</span></div>
+          <div class="bullet"><div class="bullet-dot"></div><span>Bio-keyword tribe labeling</span></div>
+          <div class="bullet"><div class="bullet-dot"></div><span>Shareable PNG tribe map</span></div>
+        </div>
+      </div>
+      <div class="feature-card-wrap">
+        <div class="tribes-preview" id="tribes-preview"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIGNAL -->
+  <section class="feature-section alt" id="signal">
+    <div class="feature-inner reverse">
+      <div class="feature-text">
+        <div class="tag accent-b">Feature 02 — The $10M Feature</div>
+        <h2 class="feature-title">SIGNAL</h2>
+        <p class="feature-desc">
+          Most tools measure followers, likes, and engagement. These are vanity metrics.
+          In network theory, <strong>influence comes from position</strong> — who you are
+          connected to, how you bridge clusters, and where you sit on the shortest paths
+          between communities.
+        </p>
+        <p class="feature-desc">
+          SIGNAL computes <strong>degree centrality</strong>, <strong>betweenness centrality</strong>,
+          and community rank to surface accounts that actually matter — including hidden
+          influencers you would never find by follower count alone.
+        </p>
+        <div class="metric-grid">
+          <div class="metric">
+            <div class="metric-name">Degree Centrality</div>
+            <div class="metric-desc">How connected is this node?</div>
+          </div>
+          <div class="metric">
+            <div class="metric-name">Betweenness</div>
+            <div class="metric-desc">How often on the shortest path between others?</div>
+          </div>
+          <div class="metric">
+            <div class="metric-name">Community Rank</div>
+            <div class="metric-desc">Top position within their tribe?</div>
+          </div>
+        </div>
+      </div>
+      <div class="signal-preview" id="signal-preview"></div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section" id="how">
+    <div class="how-inner">
+      <div class="section-header-center">
+        <div class="tag">How It Works</div>
+        <h2 class="how-title">From Follow List to Graph Intelligence</h2>
+        <p class="how-desc">Everything runs in your browser. No API keys. No servers. No data leaves your machine.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-body">
+            <div class="step-title">Scan Your Following List</div>
+            <p class="step-desc">Navigate to your following page and click Analyze My Network. The extension scrolls and extracts every account including display names, usernames, and bios.</p>
+          </div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-body">
+            <div class="step-title">Build the Graph</div>
+            <p class="step-desc">Bio keywords are extracted and a Jaccard similarity score computed between every pair. Edges are created for pairs above the similarity threshold using an inverted-index approach for performance.</p>
+          </div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-body">
+            <div class="step-title">Detect Communities</div>
+            <p class="step-desc">Louvain modularity optimization partitions the graph into communities that maximize internal connectivity. Your tribes emerge naturally from the data.</p>
+          </div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-body">
+            <div class="step-title">Compute SIGNAL</div>
+            <p class="step-desc">Degree centrality, approximate betweenness centrality via Brandes sampling, and community rank are combined into a single SIGNAL score per account.</p>
+          </div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step">
+          <div class="step-num">05</div>
+          <div class="step-body">
+            <div class="step-title">Visualize and Share</div>
+            <p class="step-desc">An interactive force-directed graph renders your network in full color sized by signal score. Export your tribe map or network view as a shareable PNG.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTALL -->
+  <section class="install-section" id="install">
+    <div class="install-inner">
+      <div class="install-card">
+        <div class="install-eyebrow">Get Started</div>
+        <h2 class="install-title">Install CreatorGraph</h2>
+        <p class="install-desc">Free Chrome extension. No account required. Your data never leaves your browser.</p>
+        <div class="install-steps">
+          <div class="install-step">
+            <div class="istep-num">1</div>
+            <div>Build the extension (<code>npm install &amp;&amp; npm run build</code>), then load <code>dist/</code> as an unpacked extension at <code>chrome://extensions</code>.</div>
+          </div>
+          <div class="install-step">
+            <div class="istep-num">2</div>
+            <div>Navigate to <code>x.com/[yourhandle]/following</code>.</div>
+          </div>
+          <div class="install-step">
+            <div class="istep-num">3</div>
+            <div>Click the CreatorGraph extension icon then <strong>Analyze My Network</strong>.</div>
+          </div>
+          <div class="install-step">
+            <div class="istep-num">4</div>
+            <div>Wait roughly two minutes while it scans. Your tribe map opens automatically when done.</div>
+          </div>
+        </div>
+        <a href="https://github.com/ShangoBashi/CreatorGraph" class="btn-install" target="_blank" rel="noopener noreferrer">
+          View on GitHub
+        </a>
+        <div class="install-note">Open source — MIT License — No tracking — No servers</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-mark"></div>
+        <span class="footer-word">CreatorGraph</span>
+      </div>
+      <div class="footer-meta">
+        <p class="footer-by">Made by Shango Bashi</p>
+        <p class="footer-copy">&copy; 2026 CreatorGraph. Open source, MIT License.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
+</body>
+</html>

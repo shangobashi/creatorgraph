@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="./popup.css" />
+    <title>CreatorGraph</title>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="titleRow">
+        <div class="logo-mark"></div>
+        <div>
+          <div class="title">CreatorGraph</div>
+          <div class="subtitle">Your tribes. Your signal.</div>
+        </div>
+      </div>
+
+      <div class="desc">
+        Navigate to your <strong>X/Twitter /following</strong> page, then click Analyze.
+      </div>
+
+      <button id="analyzeBtn" class="btn primary">Analyze My Network</button>
+
+      <div id="lastResult" class="card" style="display:none">
+        <div class="cardTitle">Last analysis</div>
+        <div id="lastResultBody" class="cardBody">—</div>
+        <div class="cardActions">
+          <button id="viewResultsBtn" class="btnSmall">View Results</button>
+        </div>
+      </div>
+
+      <div id="status" class="status"></div>
+
+      <div class="footer">Made by Shango Bashi</div>
+    </div>
+    <script src="./popup.js"></script>
+  </body>
+</html>
