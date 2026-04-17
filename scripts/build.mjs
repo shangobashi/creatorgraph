@@ -2,6 +2,7 @@ import * as esbuild from "esbuild";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { zipSync } from "fflate";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
@@ -32,6 +33,29 @@ function copyStatic() {
     }
   }
   console.log("copied static files");
+}
+
+function collectDirEntries(dir, prefix = "") {
+  const entries = {};
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    const name = prefix ? `${prefix}/${entry.name}` : entry.name;
+    if (entry.isDirectory()) {
+      Object.assign(entries, collectDirEntries(full, name));
+    } else {
+      entries[name] = new Uint8Array(fs.readFileSync(full));
+    }
+  }
+  return entries;
+}
+
+function writeExtensionZip() {
+  const downloadsDir = path.join(root, "downloads");
+  fs.mkdirSync(downloadsDir, { recursive: true });
+  const zipPath = path.join(downloadsDir, "creatorgraph-extension.zip");
+  const archive = zipSync(collectDirEntries(dist, "creatorgraph"), { level: 9 });
+  fs.writeFileSync(zipPath, Buffer.from(archive));
+  console.log("  packaged downloads/creatorgraph-extension.zip");
 }
 
 const shared = {
@@ -75,6 +99,7 @@ async function run() {
     );
     console.log("build complete -> dist/");
   }
+  writeExtensionZip();
 }
 
 run().catch((e) => { console.error(e); process.exit(1); });
