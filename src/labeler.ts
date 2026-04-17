@@ -1,5 +1,4 @@
 import type { GraphNode, Tribe } from "./types";
-import { extractKeywords } from "./graph";
 
 // Predefined tribe labels based on keyword clusters
 const TRIBE_PATTERNS: [string, string[]][] = [
@@ -36,7 +35,7 @@ export function labelTribe(members: GraphNode[], tribeId: number): { label: stri
   // Count keyword frequency across all member bios
   const kwCount = new Map<string, number>();
   for (const node of members) {
-    const kws = new Set(extractKeywords(node.bio));
+    const kws = new Set(node.keywords);
     for (const kw of kws) {
       kwCount.set(kw, (kwCount.get(kw) ?? 0) + 1);
     }

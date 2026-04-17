@@ -51,7 +51,7 @@ export async function runScrollLoop(opts: {
   const pauseEveryN = opts.pauseEveryN ?? 55;
   const pauseDurationMs = opts.pauseDurationMs ?? 1800;
 
-  const minDelay = 650;
+  const minDelay = 380;
   const maxDelay = 1600;
   let settleMs = clamp(opts.settleMsInitial ?? 900, minDelay, maxDelay);
 

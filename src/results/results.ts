@@ -294,7 +294,7 @@ function initGraph(
   const ctx = graphCanvas.getContext("2d")!;
 
   const sorted = [...graph.nodes].sort((a, b) => b.signalScore - a.signalScore);
-  const MAX_NODES = 600;
+  const MAX_NODES = 300;
   const subset = sorted.slice(0, MAX_NODES);
   const subsetIds = new Set(subset.map((n) => n.id));
   const indexMap = new Map<string, number>();
@@ -405,9 +405,12 @@ function initGraph(
   }
 
   function loop() {
-    if (alpha > 0.01) tick();
-    draw();
-    requestAnimationFrame(loop);
+    if (alpha > 0.01) {
+      tick();
+      requestAnimationFrame(loop);
+    } else {
+      draw(); // final static draw
+    }
   }
   requestAnimationFrame(loop);
 
@@ -419,6 +422,7 @@ function initGraph(
     if (dragging) {
       camX += e.clientX - lastMX; camY += e.clientY - lastMY;
       lastMX = e.clientX; lastMY = e.clientY;
+      draw();
       return;
     }
     const rect = graphCanvas.getBoundingClientRect();
@@ -429,6 +433,7 @@ function initGraph(
       if (dx * dx + dy * dy <= fnodes[i].radius * fnodes[i].radius * 4) { hoveredIdx = i; break; }
     }
     graphCanvas.style.cursor = hoveredIdx >= 0 ? "pointer" : "grab";
+    if (alpha <= 0.01) draw();
   });
 
   graphCanvas.addEventListener("mousedown", (e) => {
@@ -452,6 +457,7 @@ function initGraph(
     const mx = e.clientX - rect.left, my = e.clientY - rect.top;
     camX = mx - (mx - camX) * f; camY = my - (my - camY) * f;
     camScale = Math.max(0.15, Math.min(6, camScale * f));
+    if (alpha <= 0.01) draw();
   }, { passive: false });
 
   document.getElementById("zoom-in")?.addEventListener("click", () => {

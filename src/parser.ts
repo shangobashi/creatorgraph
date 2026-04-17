@@ -20,8 +20,9 @@ function pickDisplayName(root: Element): string {
 }
 
 function extractBio(root: Element, username: string): string {
-  // Try multiple strategies to extract bio text
-  const allSpans = Array.from(root.querySelectorAll('span, div'));
+  // Try to find bio text — X bios are typically in short divs/spans
+  // Narrow selector: only leaf text containers, skip deeply nested structures
+  const allSpans = Array.from(root.querySelectorAll('div[lang] span, div[dir="auto"] span, span[lang]'));
   const candidates: string[] = [];
 
   for (const el of allSpans) {

@@ -86,9 +86,16 @@ function approximateBetweenness(
 }
 
 function normalize(arr: Float64Array): Float64Array {
-  const max = Math.max(...arr);
+  let max = 0;
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] > max) max = arr[i];
+  }
   if (max === 0) return new Float64Array(arr.length);
-  return arr.map((v) => v / max);
+  const result = new Float64Array(arr.length);
+  for (let i = 0; i < arr.length; i++) {
+    result[i] = arr[i] / max;
+  }
+  return result;
 }
 
 export function computeSignal(graph: Graph, communityMap: Map<string, number>): GraphNode[] {
@@ -117,7 +124,7 @@ export function computeSignal(graph: Graph, communityMap: Map<string, number>): 
   }
 
   // Approximate betweenness centrality
-  const sampleK = Math.min(n, Math.max(50, Math.floor(n * 0.15)));
+  const sampleK = Math.min(n, Math.max(30, Math.floor(n * 0.08)));
   const betweennessRaw = approximateBetweenness(n, adj, sampleK);
 
   // Normalize

@@ -16,6 +16,7 @@ export interface GraphNode {
   betweenness: number;
   communityRank: number;
   signalScore: number;
+  keywords: string[];
 }
 
 export interface GraphEdge {

@@ -44,12 +44,14 @@ export function buildGraph(users: RawUser[]): Graph {
   }
 
   // Count shared keywords between user pairs (only for pairs sharing ≥1 keyword)
-  const pairShared = new Map<string, number>();
+  // Use numeric key: a * N + b (avoids string alloc + parse)
+  const SCALE = users.length + 1;
+  const pairShared = new Map<number, number>();
   invertedIndex.forEach((userIdxs) => {
     if (userIdxs.length < 2 || userIdxs.length > MAX_KEYWORD_USERS) return;
     for (let a = 0; a < userIdxs.length; a++) {
       for (let b = a + 1; b < userIdxs.length; b++) {
-        const key = `${userIdxs[a]}|${userIdxs[b]}`;
+        const key = userIdxs[a] * SCALE + userIdxs[b];
         pairShared.set(key, (pairShared.get(key) ?? 0) + 1);
       }
     }
@@ -58,7 +60,8 @@ export function buildGraph(users: RawUser[]): Graph {
   // Build edges using Jaccard similarity
   const edges: GraphEdge[] = [];
   pairShared.forEach((shared, key) => {
-    const [ai, bi] = key.split("|").map(Number);
+    const ai = (key / SCALE) | 0;
+    const bi = key % SCALE;
     const sizeA = keywordSets[ai].size;
     const sizeB = keywordSets[bi].size;
     if (sizeA === 0 || sizeB === 0) return;
@@ -75,7 +78,7 @@ export function buildGraph(users: RawUser[]): Graph {
   });
 
   // Build initial nodes (centrality/scores computed later in signal.ts)
-  const nodes: GraphNode[] = users.map((u) => ({
+  const nodes: GraphNode[] = users.map((u, i) => ({
     id: u.username,
     username: u.username,
     displayName: u.displayName,
@@ -85,7 +88,8 @@ export function buildGraph(users: RawUser[]): Graph {
     degree: 0,
     betweenness: 0,
     communityRank: 0,
-    signalScore: 0
+    signalScore: 0,
+    keywords: keywordLists[i]
   }));
 
   return { nodes, edges };

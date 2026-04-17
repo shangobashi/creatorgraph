@@ -55,7 +55,10 @@ export function detectCommunities(graph: Graph): Map<string, number> {
   // Phase 1: move nodes greedily to maximize modularity
   let improved = true;
   let iterations = 0;
-  const MAX_ITER = 150;
+  const MAX_ITER = 50;
+
+  // Pre-allocate reusable Map for community weights
+  const commWeights = new Map<number, number>();
 
   while (improved && iterations < MAX_ITER) {
     improved = false;
@@ -66,7 +69,7 @@ export function detectCommunities(graph: Graph): Map<string, number> {
       const ki = degrees[i];
 
       // Sum of edge weights from i to each neighboring community
-      const commWeights = new Map<number, number>();
+      commWeights.clear();
       adj[i].forEach((w, j) => {
         const c = community[j];
         commWeights.set(c, (commWeights.get(c) ?? 0) + w);
